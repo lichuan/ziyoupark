@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>自由公园，加密聊天，私密聊天，1对1私聊，端到端加密，免注册，不被任何人监控</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        /* 样式保持不变，和之前一样 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e0f2e9 0%, #c9e4de 100%);
+            height: 100dvh;
+            width: 100vw;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        .chat-app {
+            max-width: 480px;
+            width: 100%;
+            height: 100dvh;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px -12px rgba(60, 100, 80, 0.3), 0 4px 18px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(166, 209, 187, 0.5) inset;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        @media (min-width: 480px) {
+            body {
+                align-items: center;
+                padding: 12px;
+            }
+            .chat-app {
+                height: 95vh;
+                max-height: 780px;
+                border-radius: 40px;
+            }
+        }
+
+        .top-fresh {
+            padding: 6px 16px 8px 16px;
+            background: linear-gradient(145deg, #e8f6ef 0%, #daf0e6 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(120, 180, 150, 0.3);
+            box-shadow: 0 8px 16px -10px rgba(60, 120, 90, 0.15), inset 0 1px 4px rgba(240, 255, 245, 0.8);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        .top-fresh::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #9fd3b5, #6fbc8c, #9fd3b5);
+            opacity: 0.6;
+        }
+
+        .domain-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .domain {
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #2d7a5a, #3f9e75);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Playfair Display', 'Times New Roman', 'Inter', serif;
+            line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(70, 140, 100, 0.15);
+        }
+
+        .fresh-tag {
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            color: #3a7b5e;
+            background: rgba(200, 235, 215, 0.7);
+            padding: 3px 14px 3px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(130, 190, 150, 0.5);
+            backdrop-filter: blur(2px);
+            align-self: flex-start;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .no-sign-badge-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            background: rgba(220, 245, 230, 0.5);
+            padding: 3px 6px;
+            border-radius: 16px;
+            border: 1px solid rgba(130, 190, 150, 0.4);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .no-sign-badge-vertical span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #2d7052;
+            background: #ffffff;
+            padding: 2px 8px;
+            border-radius: 30px;
+            border: 1px solid rgba(140, 200, 160, 0.4);
+            line-height: 1.2;
+        }
+
+        .marquee-wrapper {
+            background: linear-gradient(to right, #e6f5ec, #dcf0e5);
+            padding: 6px 16px;
+            border-bottom: 1px solid #b8e0cb;
+            border-top: 1px solid rgba(150, 210, 170, 0.4);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .marquee-container {
+            background: #f3fff8;
+            border-radius: 30px;
+            border: 1px solid #a8dfbf;
+            box-shadow: 0 3px 8px rgba(80, 140, 100, 0.15);
+            overflow: hidden;
+            position: relative;
+            height: 36px;
+            width: 100%;
+        }
+
+        .marquee-content {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            color: #146b48;
+            font-weight: 500;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            will-change: left;
+        }
+
+        .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            padding: 3px 20px 3px 14px;
+            margin-right: 25px;
+            font-size: 0.85rem;
+        }
+
+        .marquee-item .tag {
+            background: #46b882;
+            color: white;
+            border-radius: 30px;
+            padding: 2px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+            line-height: 1.4;
+        }
+
+        .key-section-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .toggle-key-btn {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 15;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 0;
+        }
+
+        .toggle-key-btn svg {
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 2px 4px rgba(100, 160, 120, 0.15));
+            transition: all 0.2s ease;
+        }
+
+        .toggle-key-btn:hover svg {
+            transform: scale(1.08);
+            filter: drop-shadow(0 3px 6px rgba(100, 160, 120, 0.25));
+        }
+
+        .toggle-key-btn:active svg {
+            transform: scale(0.98);
+        }
+
+        .key-section {
+            padding: 20px 16px 10px 16px;
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid #c0e8d0;
+            transition: all 0.3s ease;
+        }
+
+        .key-section.collapsed {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-bottom: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .key-section.collapsed .my-key-row,
+        .key-section.collapsed .target-row {
+            display: none;
+        }
+
+        .my-key-row, .target-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 3px 3px 3px 8px;
+            border-radius: 40px;
+            border: 1px solid #b8e2cb;
+            box-shadow: 0 3px 8px #c0e5d0;
+            min-height: 44px;
+            height: auto;
+        }
+        
+        .my-key-row {
+            margin-bottom: 8px;
+        }
+
+        .my-key-label, .target-label {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #1b4e38;
+            background: linear-gradient(135deg, #d0f0e0, #b8e8d0);
+            padding: 4px 12px;
+            border-radius: 30px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(100, 160, 120, 0.15);
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+            line-height: 1.3;
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+        }
+
+        .key-text-container {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            background: white;
+            border-radius: 30px;
+            padding: 0;
+            margin: 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            min-height: 36px;
+        }
+        
+        .key-text-container::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .my-key-block {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 400;
+            font-size: 0.75rem;
+            color: #0f5e3b;
+            padding: 0 12px;
+            line-height: 36px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            background: #f7fff9;
+            border: none;
+            outline: none;
+            width: 100%;
+            cursor: default;
+            user-select: text;
+            pointer-events: auto;
+            border-radius: 30px;
+            height: 36px;
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+        }
+        
+        .target-input {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-weight: 400;
+            font-size: 0.75rem;
+            color: #0f5e3b;
+            padding: 0 12px 0 4px;
+            line-height: 36px;
+            letter-spacing: 0.5px;
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            white-space: nowrap;
+            height: 36px;
+            box-sizing: border-box;
+            display: block;
+            text-align: left;
+        }
+        
+        .target-input::placeholder {
+            color: #98bba8;
+            font-style: italic;
+            font-size: 0.75rem;
+            line-height: 36px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            width: 340px;
+            max-width: 90%;
+            padding: 28px 24px;
+            box-shadow: 0 20px 40px -12px rgba(60, 80, 70, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #b54545;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .modal-message {
+            font-size: 1rem;
+            color: #2d6047;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            min-width: 110px;
+        }
+
+        .modal-btn.cancel {
+            background: #e8f3ee;
+            color: #2d6047;
+            border: 1px solid #b0d5c0;
+        }
+
+        .modal-btn.confirm {
+            background: #fce8e8;
+            color: #b54545;
+            border: 1px solid #d88b8b;
+        }
+
+        .sending-modal {
+            background: white;
+            border-radius: 30px;
+            padding: 32px 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 280px;
+        }
+
+        .sending-spinner {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .sending-text {
+            font-size: 1.1rem;
+            color: #2d6047;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .custom-toast-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f97b5c;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(230, 90, 50, 0.3);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            border: 1px solid #ff9b85;
+            max-width: 260px;
+            line-height: 1.5;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .custom-toast-alert.show {
+            opacity: 1;
+        }
+
+        .chat-main {
+            background: #f1fbf7;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 0;
+            min-height: 0;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+
+        .message-container {
+            position: relative;
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .message-area {
+            flex: 1 1 auto;
+            padding: 16px 16px 8px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f6fffb;
+            scrollbar-width: thin;
+            min-height: 0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .clear-float-btn {
+            position: absolute;
+            top: 28px;
+            right: 16px;
+            background: rgba(255, 235, 235, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid #e0b0b0;
+            color: #b54545;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(180, 70, 70, 0.2);
+            white-space: nowrap;
+            pointer-events: auto;
+            line-height: 1.3;
+            z-index: 30;
+        }
+
+        .clear-float-btn span {
+            font-size: 1rem;
+        }
+
+        .clear-float-btn:hover {
+            background: rgba(255, 220, 220, 0.98);
+            border-color: #d88b8b;
+            color: #a13333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(180, 70, 70, 0.3);
+        }
+
+        .clear-float-btn:active {
+            transform: translateY(1px);
+            background: rgba(250, 210, 210, 0.98);
+            box-shadow: 0 1px 4px rgba(180, 70, 70, 0.15);
+        }
+
+        .message-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .message-area::-webkit-scrollbar-track { 
+            background: #e0f0e7; 
+            border-radius: 10px; 
+        }
+        .message-area::-webkit-scrollbar-thumb { 
+            background: #6fc099; 
+            border-radius: 10px; 
+        }
+
+        .message {
+            display: flex;
+            max-width: 85%;
+        }
+
+        .message.own {
+            align-self: flex-end;
+        }
+
+        .message.other {
+            align-self: flex-start;
+        }
+
+        .bubble {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px 8px 16px;
+            border-radius: 22px;
+            background: white;
+            box-shadow: 0 3px 8px rgba(70, 130, 100, 0.1);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #1b4e38;
+            border: 1px solid #c5eed9;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            max-width: 100%;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+        }
+
+        .bubble-content {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .own .bubble {
+            background: #d7f5e4;
+            border: 1px solid #80cb9e;
+            border-bottom-right-radius: 6px;
+        }
+
+        .other .bubble {
+            border-bottom-left-radius: 6px;
+            background: white;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.65rem;
+            color: #5f8b78;
+            margin-top: 0;
+            padding-left: 0;
+            flex-wrap: wrap;
+            max-width: 100%;
+            align-self: flex-end;
+        }
+
+        .other .meta {
+            justify-content: flex-start;
+            align-self: flex-start;
+        }
+
+        .own .meta {
+            justify-content: flex-end;
+            align-self: flex-end;
+        }
+
+        .encrypt-tiny {
+            color: #1f9e60;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .chat-input-footer {
+            background: white;
+            border-top: 1px solid #ceeedd;
+            padding: 12px 16px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            backdrop-filter: blur(5px);
+            flex-shrink: 0;
+            width: 100%;
+            padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+            background: rgba(255, 255, 255, 0.98);
+            position: relative;
+            z-index: 20;
+        }
+
+        .input-field-wrapper {
+            flex: 1;
+            background: #f0fef7;
+            border-radius: 24px;
+            border: 1px solid #aadbbc;
+            padding: 8px 12px;
+            display: flex;
+            align-items: flex-start;
+            min-width: 0;
+            transition: border-radius 0.2s;
+        }
+
+        .message-textarea {
+            border: none;
+            background: transparent;
+            padding: 4px 0;
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            color: #1b5e40;
+            -webkit-text-size-adjust: 100%;
+            font-family: inherit;
+            resize: none;
+            line-height: 1.5;
+            max-height: 120px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            min-height: 28px;
+        }
+
+        .message-textarea::placeholder {
+            color: #9ac0ad;
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        .send-button {
+            background: #2f9f70;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(47, 159, 112, 0.3);
+            border: 1px solid #6fc99a;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            align-self: flex-end;
+            line-height: 1.2;
+        }
+
+        .send-button:hover {
+            background: #38b37c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(47, 159, 112, 0.4);
+        }
+
+        .send-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(47, 159, 112, 0.3);
+        }
+
+        .send-button span {
+            font-size: 1.1rem;
+        }
+
+        @media (max-height: 640px) {
+            .chat-app {
+                height: 100dvh;
+                border-radius: 0;
+            }
+            .message-area {
+                padding: 12px 12px 6px 12px;
+            }
+            .chat-input-footer {
+                padding: 10px 12px;
+            }
+            .bubble {
+                font-size: 0.9rem;
+                padding: 10px 14px 6px 14px;
+            }
+            .clear-float-btn {
+                top: 26px;
+                right: 12px;
+                padding: 3px 8px;
+                font-size: 0.9rem;
+            }
+            .my-key-label, .target-label {
+                padding: 3px 10px;
+                font-size: 0.75rem;
+                height: 28px;
+            }
+            .my-key-block {
+                height: 32px;
+                font-size: 0.7rem;
+                line-height: 32px;
+                padding: 0 10px;
+            }
+            .target-input {
+                height: 32px;
+                font-size: 0.7rem;
+                line-height: 32px;
+                padding: 0 10px 0 4px;
+            }
+            .target-input::placeholder {
+                line-height: 32px;
+            }
+            .key-text-container {
+                min-height: 32px;
+            }
+            .top-fresh {
+                padding: 4px 16px 6px 16px;
+            }
+            .domain {
+                font-size: 1.6rem;
+            }
+            .fresh-tag {
+                font-size: 0.7rem;
+                padding: 2px 12px 2px 14px;
+            }
+            .custom-toast-alert {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                max-width: 220px;
+                border-radius: 10px;
+            }
+            .sending-modal {
+                padding: 24px 32px;
+            }
+            .sending-spinner {
+                font-size: 2.5rem;
+            }
+            .sending-text {
+                font-size: 1rem;
+            }
+            .toggle-key-btn {
+                top: -10px;
+                width: 40px;
+                height: 24px;
+            }
+            .toggle-key-btn svg {
+                width: 36px;
+                height: 36px;
+            }
+            .message-textarea {
+                font-size: 0.95rem;
+                max-height: 100px;
+            }
+            .input-field-wrapper {
+                border-radius: 22px;
+                padding: 6px 10px;
+            }
+        }
+
+        .keyboard-visible .chat-input-footer {
+            background: white;
+            border-top: 2px solid #2f9f70;
+            box-shadow: 0 -4px 12px rgba(47, 159, 112, 0.15);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+    </style>
+</head>
+<body>
+    <div class="chat-app">
+        <div class="top-fresh">
+            <div class="domain-box">
+                <span class="domain">ziyoupark.com</span>
+                <span class="fresh-tag">自 由 公 园</span>
+            </div>
+            <div class="no-sign-badge-vertical">
+                <span>📱 无需手机</span>
+                <span>✉️ 无需邮箱</span>
+                <span>🔑 无需注册</span>
+            </div>
+        </div>
+
+        <div class="marquee-wrapper">
+            <div class="marquee-container" id="marqueeContainer">
+                <div class="marquee-content" id="marqueeContent"></div>
+            </div>
+        </div>
+
+        <div class="key-section-wrapper">
+            <div class="toggle-key-btn" id="toggleKeyBtn" title="折叠/展开密钥区域">
+                <svg viewBox="0 0 30 30" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 7L7 15L9 17L15 11L21 17L23 15L15 7Z" fill="#6aa384" stroke="none" />
+                    <path d="M15 15L7 23L9 25L15 19L21 25L23 23L15 15Z" fill="#6aa384" stroke="none" />
+                </svg>
+            </div>
+            
+            <div class="key-section" id="keySection">
+                <div class="my-key-row">
+                    <span class="my-key-label">我的密钥</span>
+                    <div class="key-text-container">
+                        <span class="my-key-block" id="myKeyId"></span>
+                    </div>
+                </div>
+                
+                <div class="target-row">
+                    <span class="target-label">对方密钥</span>
+                    <input class="target-input" type="text" id="targetKeyInput" placeholder="粘贴对方的密钥到这里" value="">
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="message-container">
+                <div class="clear-float-btn" id="clearChatBtn" title="清空所有聊天记录">
+                    <span>🧹</span> 清空痕迹
+                </div>
+                
+                <div class="message-area" id="messageArea"></div>
+            </div>
+
+            <div class="chat-input-footer" id="chatInputFooter">
+                <div class="input-field-wrapper">
+                    <textarea class="message-textarea" id="messageInput" placeholder="输入消息... AES加密" rows="1"></textarea>
+                </div>
+                <button class="send-button" id="sendMessageBtn" aria-label="发送消息">
+                    <span>📨</span> 发送
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="sendingModal">
+        <div class="sending-modal">
+            <div class="sending-spinner">⏳</div>
+            <div class="sending-text">正在发送中，请稍候......</div>
+        </div>
+    </div>
+
+    <div class="custom-toast-alert" id="messageToast">发送消息不能为空</div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-container">
+            <div class="modal-icon">⚠️</div>
+            <div class="modal-title">清空聊天记录？</div>
+            <div class="modal-message">
+                确定清除所有的历史聊天内容，<br>并重新生成新的密钥吗？
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" id="modalCancel">取消</button>
+                <button class="modal-btn confirm" id="modalConfirm">清空</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ===== 常量定义 =====
+            const STORAGE_MY_KEY = 'chat_my_key';
+            const STORAGE_TARGET_KEY = 'chat_target_key';
+            const STORAGE_NOTICEID = 'noticeid';
+            const STORAGE_NOTICEDATA = 'noticedata';
+            const STORAGE_MESSAGES = 'chat_messages';
+            const MAX_MESSAGES = 200;
+            const POLL_INTERVAL = 1000;
+            let myKey = null;
+            let targetKey = null;
+            let sendIds = {};
+            let recvIds = {};
+            let noticeid = "0";
+            
+            let messageList = [];
+            
+            let animationFrame = null;
+            let scrollPosition = 0;
+            let contentWidth = 0;
+            let isPaused = false;
+            
+            // ===== 工具函数 =====
+            function showAlertToast(message) {
+                const toast = document.getElementById('messageToast');
+                if (!toast) return;
+                toast.textContent = message;
+                if (window.toastTimer) clearTimeout(window.toastTimer);
+                toast.classList.add('show');
+                window.toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    window.toastTimer = null;
+                }, 2000);
+            }
+
+            function generate128BitKey() {
+                const array = new Uint8Array(16);
+                crypto.getRandomValues(array);
+                return btoa(String.fromCharCode.apply(null, array));
+            }
+
+            function strToBase64(str) {
+                const encoder = new TextEncoder();
+                const uint8Array = encoder.encode(str);
+                let binary = '';
+                for (let i = 0; i < uint8Array.length; i++) {
+                    binary += String.fromCharCode(uint8Array[i]);
+                }
+                return btoa(binary);
+            }
+
+            function base64ToStr(base64Str) {
+                const binary = atob(base64Str);
+                const uint8Array = new Uint8Array(binary.length);
+                for (let i = 0; i < binary.length; i++) {
+                    uint8Array[i] = binary.charCodeAt(i);
+                }
+                const decoder = new TextDecoder();
+                return decoder.decode(uint8Array);
+            }
+
+            function base64ToUint8Array(base64) {
+                const binaryString = atob(base64);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return bytes;
+            }
+
+            function uint8ArrayToBase64(uint8Array) {
+                let binary = '';
+                for (let i = 0; i < uint8Array.length; i++) {
+                    binary += String.fromCharCode(uint8Array[i]);
+                }
+                return btoa(binary);
+            }
+
+            async function sha1Base64(input) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(input);
+                const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+                const hashArray = new Uint8Array(hashBuffer);
+                return btoa(String.fromCharCode.apply(null, hashArray));
+            }
+
+            function getKeyPrefix(key) {
+                return key.substring(0, 7);
+            }
+
+            // ===== 解密函数 =====
+            async function decryptMessageFromBase64(encryptedBase64, base64Key) {
+                try {
+                    const encryptedData = base64ToUint8Array(encryptedBase64);
+                    
+                    const keyData = base64ToUint8Array(base64Key);
+                    const cryptoKey = await crypto.subtle.importKey(
+                        'raw',
+                        keyData,
+                        { name: 'AES-GCM' },
+                        false,
+                        ['decrypt']
+                    );
+                    
+                    const iv = encryptedData.slice(0, 12);
+                    const cipherData = encryptedData.slice(12);
+                    
+                    const decryptedData = await crypto.subtle.decrypt(
+                        {
+                            name: 'AES-GCM',
+                            iv: iv,
+                            tagLength: 128
+                        },
+                        cryptoKey,
+                        cipherData
+                    );
+                    
+                    const decoder = new TextDecoder();
+                    return decoder.decode(decryptedData);
+                } catch (error) {
+                    console.error('解密失败:', error);
+                    return '[解密失败]';
+                }
+            }
+
+            // ===== 滚动广告相关代码 =====
+            function setMarqueeText(text, tag = '通知', tagColor = '#46b882') {
+                const container = document.getElementById('marqueeContent');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                const createItem = () => {
+                    const item = document.createElement('span');
+                    item.className = 'marquee-item';
+                    item.innerHTML = `<span class="tag" style="background: ${tagColor}">${tag}</span>${text}`;
+                    return item;
+                };
+                
+                for (let i = 0; i < 8; i++) {
+                    container.appendChild(createItem());
+                }
+                
+                scrollPosition = 0;
+                container.style.left = '0px';
+                contentWidth = container.scrollWidth / 2;
+                startMarquee();
+            }
+            
+            function startMarquee() {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+                
+                const container = document.getElementById('marqueeContent');
+                if (!container) return;
+                
+                const speed = 0.3;
+                
+                function scroll() {
+                    if (!isPaused) {
+                        scrollPosition -= speed;
+                        
+                        if (Math.abs(scrollPosition) >= contentWidth) {
+                            scrollPosition = 0;
+                        }
+                        
+                        container.style.left = scrollPosition + 'px';
+                    }
+                    
+                    animationFrame = requestAnimationFrame(scroll);
+                }
+                
+                animationFrame = requestAnimationFrame(scroll);
+            }
+
+            // ===== 消息存储管理 =====
+            function loadMessages() {
+                const saved = localStorage.getItem(STORAGE_MESSAGES);
+                if (saved) {
+                    try {
+                        messageList = JSON.parse(saved);
+                    } catch (e) {
+                        messageList = [];
+                    }
+                } else {
+                    const now = new Date();
+                    const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+                    messageList = [
+                        {
+                            text: '1对1私密聊天，和你的朋友交换密钥后，除了聊天双方外，任何人都无法获取聊天的内容。如果你对网站有任何的建议，也可以向网站管理员发送消息，方法是，在对方密钥的输入框中，填写特殊的密钥串 123456781234567812345678 记住一共是24个字符，这样就会发送到管理员，也能接收管理员的回复，你和管理员之间，是以明文的形式，因为管理员没有你的密钥。我们也建了一个qq群，为对隐私安全感兴趣的朋友，提供一个相互交流的地方，群号是 933529835',
+                            who: 0,
+                            timestamp: timeStr,
+                            keyPrefix: '',
+                            isencrypt: false
+                        }
+                    ];
+                }
+                return messageList;
+            }
+
+            function saveMessages() {
+                if (messageList.length > MAX_MESSAGES) {
+                    messageList = messageList.slice(-MAX_MESSAGES);
+                }
+                localStorage.setItem(STORAGE_MESSAGES, JSON.stringify(messageList));
+            }
+
+            function renderMessages() {
+                const messageArea = document.getElementById('messageArea');
+                if (!messageArea) return;
+                
+                messageArea.innerHTML = '';
+                
+                messageList.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = msg.who == 3 ? 'message own' : 'message other';
+                    
+                    messageDiv.innerHTML = `
+                        <div class="bubble">
+                            <div class="bubble-content">${msg.text}</div>
+                            <div class="meta">
+                                <span>${msg.keyPrefix || ''}</span>
+                                <span>${msg.who == 0 ? '系统' : msg.who == 1 ? '网站管理员' : msg.who == 2 ? '对方' : '我'} ${msg.timestamp}</span>
+                                ${msg.isencrypt ? '<span class="encrypt-tiny">🔒 AES</span>' : ''}
+                            </div>
+                        </div>
+                    `;
+                    
+                    messageArea.appendChild(messageDiv);
+                });
+                
+                messageArea.scrollTop = messageArea.scrollHeight;
+            }
+
+            function addMessage(text, who, keyPrefix, timestamp, isencrypt) {
+                if (!timestamp) {
+                    const now = new Date();
+                    timestamp = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+                }
+                
+                messageList.push({
+                    text: text,
+                    who: who,
+                    timestamp: timestamp,
+                    keyPrefix: keyPrefix,
+                    isencrypt: isencrypt
+                });
+                
+                saveMessages();
+                renderMessages();
+            }
+
+            // ===== 密钥管理 =====
+            function initMyKey() {
+                const myKeyElement = document.getElementById('myKeyId');
+                if (!myKeyElement) return null;
+                
+                let myObjStr = localStorage.getItem(STORAGE_MY_KEY);
+                
+                if (!myObjStr) {
+                    let newKey = generate128BitKey();
+                    let newObj = {
+                        key: newKey,
+                        sendids: {},
+                        recvids: {}
+                    };
+                    localStorage.setItem(STORAGE_MY_KEY, JSON.stringify(newObj));
+                    myObjStr = localStorage.getItem(STORAGE_MY_KEY);
+                }
+                
+                let myObj = JSON.parse(myObjStr);
+                myKey = myObj.key;
+                sendIds = myObj.sendids || {};
+                recvIds = myObj.recvids || {};
+                myKeyElement.textContent = myKey;
+            }
+
+            function initNotice() {
+                let id = localStorage.getItem(STORAGE_NOTICEID);
+                if(!id) {
+                    setMarqueeText('✨大家好，本网站叫自由公园，是1对1私密聊天，端到端加密，不被任何人监控，放心聊天的地方！如果你对隐私安全感兴趣，或者对本网站有一些建议或意见，也欢迎加入我们的QQ群：933529835');
+                    return;
+                }
+
+                noticeid = id;
+                let data = localStorage.getItem(STORAGE_NOTICEDATA);
+                if(data) {
+                    setMarqueeText(data);
+                }
+            }
+
+            function saveNotice(data) {
+                localStorage.setItem(STORAGE_NOTICEID, noticeid);
+                localStorage.setItem(STORAGE_NOTICEDATA, data);
+            }
+
+            function initTargetKey() {
+                const targetInput = document.getElementById('targetKeyInput');
+                if (!targetInput) return;
+                
+                const savedTargetKey = localStorage.getItem(STORAGE_TARGET_KEY);
+                targetInput.value = savedTargetKey || '';
+
+                if(savedTargetKey) {
+                    targetKey = savedTargetKey;
+                }
+            }
+
+            function getOrCreateSendId(targetKeyValue) {
+                if (!targetKeyValue) return null;
+                
+                if (sendIds[targetKeyValue]) {
+                    return sendIds[targetKeyValue];
+                }
+                
+                const newSendId = generate128BitKey();
+                sendIds[targetKeyValue] = newSendId;
+                
+                const myObjStr = localStorage.getItem(STORAGE_MY_KEY);
+                if (myObjStr) {
+                    const myObj = JSON.parse(myObjStr);
+                    myObj.sendids = sendIds;
+                    localStorage.setItem(STORAGE_MY_KEY, JSON.stringify(myObj));
+                }
+                
+                return newSendId;
+            }
+
+            function getOrCreateRecvId(targetKeyValue) {
+                if (!targetKeyValue) return null;
+                
+                if (recvIds[targetKeyValue]) {
+                    return recvIds[targetKeyValue];
+                }
+                
+                const newRecvId = generate128BitKey();
+                recvIds[targetKeyValue] = newRecvId;
+                
+                const myObjStr = localStorage.getItem(STORAGE_MY_KEY);
+                if (myObjStr) {
+                    const myObj = JSON.parse(myObjStr);
+                    myObj.recvids = recvIds;
+                    localStorage.setItem(STORAGE_MY_KEY, JSON.stringify(myObj));
+                }
+                
+                return newRecvId;
+            }
+
+            // ===== AES加密 =====
+            async function encryptMessageToBase64(plainText, base64Key) {
+                try {
+                    const keyData = base64ToUint8Array(base64Key);
+                    const cryptoKey = await crypto.subtle.importKey(
+                        'raw',
+                        keyData,
+                        { name: 'AES-GCM' },
+                        false,
+                        ['encrypt']
+                    );
+                    
+                    const iv = crypto.getRandomValues(new Uint8Array(12));
+                    
+                    const encoder = new TextEncoder();
+                    const plainData = encoder.encode(plainText);
+                    
+                    const cipherData = await crypto.subtle.encrypt(
+                        {
+                            name: 'AES-GCM',
+                            iv: iv,
+                            tagLength: 128
+                        },
+                        cryptoKey,
+                        plainData
+                    );
+                    
+                    const result = new Uint8Array(iv.length + cipherData.byteLength);
+                    result.set(iv, 0);
+                    result.set(new Uint8Array(cipherData), iv.length);
+                    
+                    return uint8ArrayToBase64(result);
+                } catch (error) {
+                    console.error('加密失败:', error);
+                    throw error;
+                }
+            }
+
+            // ===== 发送消息 =====
+            async function sendMessage(text) {
+                try {
+                    const hash1 = await sha1Base64(myKey);
+                    const hash2 = await sha1Base64(targetKey);
+                    
+                    const sendId = getOrCreateSendId(targetKey);
+                    if (!sendId) {
+                        showAlertToast('无法生成发送ID');
+                        return;
+                    }
+
+                    // 判断是否是发给管理员的建议消息（特殊密钥）
+                    let encryptedMsgBase64;
+                    let isencrypt = true;
+                    if (targetKey === '123456781234567812345678') {
+                        // 发给管理员的建议消息，不加密，只是base64
+                        encryptedMsgBase64 = strToBase64(text);
+                        isencrypt = false;
+                    } else {
+                        if(!targetKey.endsWith("==")) {
+                            showAlertToast('对方密钥的格式不正确，应该以 == 结尾');
+                            return;
+                        }
+                        // 普通消息，加密
+                        encryptedMsgBase64 = await encryptMessageToBase64(text, targetKey);
+                    }
+                    
+                    const formData = new URLSearchParams();
+                    formData.append('hash1', hash1);
+                    formData.append('hash2', hash2);
+                    formData.append('sendid', sendId);
+                    formData.append('msg', encryptedMsgBase64);
+                    
+                    const sendingModal = document.getElementById('sendingModal');
+                    if (sendingModal) sendingModal.classList.add('show');
+                    
+                    const response = await fetch('/sendmsg', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: formData.toString()
+                    });
+
+                    if(!response.ok) {
+                        showAlertToast('发送失败，请求非法');
+                        return;
+                    }
+                    
+                    if (sendingModal) sendingModal.classList.remove('show');
+                    
+                    const responseData = await response.json();
+                    
+                    if (responseData.ret === 1) {
+                        const now = new Date();
+                        const timestamp = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+                        const keyPrefix = getKeyPrefix(myKey);
+                        
+                        addMessage(text, 3, keyPrefix, timestamp, isencrypt);
+                        
+                        document.getElementById('messageInput').value = '';
+                        const textarea = document.getElementById('messageInput');
+                        textarea.style.height = 'auto';
+                        textarea.style.height = '28px';
+                    } else {
+                        showAlertToast('发送失败，服务器拒绝');
+                    }
+                    
+                } catch (error) {
+                    console.error('发送失败:', error);
+                    
+                    const sendingModal = document.getElementById('sendingModal');
+                    if (sendingModal) sendingModal.classList.remove('show');
+                    
+                    showAlertToast('网络错误，请重试');
+                }
+            }
+
+            // ===== 接收消息 =====
+            async function receiveMessages() {
+                if (!myKey || !targetKey) {
+                    return;
+                }
+
+                if (myKey.length != 24 || targetKey.length != 24) {
+                    return;
+                }
+
+                if (myKey == targetKey) {
+                    return;
+                }
+
+                try {
+                    // 计算hash1（对方密钥的SHA1）和hash2（自己密钥的SHA1）
+                    const hash1 = await sha1Base64(targetKey);  // 对方是发送方
+                    const hash2 = await sha1Base64(myKey);      // 自己是接收方
+                    
+                    // 获取或生成recvid
+                    const recvId = getOrCreateRecvId(targetKey);
+                    if (!recvId) {
+                        return;
+                    }
+                    
+                    // 准备表单数据
+                    const formData = new URLSearchParams();
+                    formData.append('hash1', hash1);
+                    formData.append('hash2', hash2);
+                    formData.append('recvid', recvId);
+                    formData.append('noticeid', noticeid);
+                    
+                    // 发送请求
+                    const response = await fetch('/recvmsg', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: formData.toString()
+                    });
+
+                    if (!response.ok) {
+                        return;
+                    }
+                    
+                    const responseData = await response.json();
+
+                    if(responseData.ret != 1) {
+                        return;
+                    }
+
+                    if(responseData.noticedata) {
+                        noticeid = responseData.noticeid;
+                        saveNotice(base64ToStr(responseData.noticedata));
+                        setMarqueeText(base64ToStr(responseData.noticedata));
+                    }
+
+                    if (responseData.hash1 !== hash1) {
+                        console.log('hash1不匹配，丢弃整批消息');
+                        return;
+                    }
+
+                    // 验证hash2是否匹配（确保消息是发给自己的）
+                    if (responseData.hash2 !== hash2) {
+                        console.log('hash2不匹配，丢弃整批消息');
+                        return;
+                    }
+
+                    let isencrypt = true;
+
+                    if(targetKey == '123456781234567812345678') {
+                        isencrypt = false;
+                    }
+                    
+                    if (responseData.messages && responseData.messages.length > 0) {
+                        // 按时间顺序处理消息（服务器已经排好序，旧的在前）
+                        for (const msgData of responseData.messages) {
+                            // 解密消息（使用自己的密钥）
+                            let decryptedText;
+                            
+                            if(isencrypt) {
+                                decryptedText = await decryptMessageFromBase64(msgData.msg, myKey);
+                            } else {
+                                decryptedText = base64ToStr(msgData.msg);
+                            }
+
+                            // 将时间戳转换为可读格式
+                            const date = new Date(msgData.timestamp * 1000);
+                            const timestamp = `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
+                            
+                            // 获取对方密钥前缀作为显示
+                            const keyPrefix = getKeyPrefix(targetKey);
+                            
+                            // 添加到聊天区域（isOwn = false，因为是对方发送的）
+                            addMessage(decryptedText, isencrypt ? 2 : 1, keyPrefix, timestamp, isencrypt);
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error('接收消息失败:', error);
+                }
+            }
+
+            // ===== 重新生成我的密钥 =====
+            function regenerateMyKey() {
+                // 生成新密钥
+                const newKey = generate128BitKey();
+                const newObj = {
+                    key: newKey,
+                    sendids: {},
+                    recvids: {}
+                };
+                
+                // 更新localStorage
+                localStorage.setItem(STORAGE_MY_KEY, JSON.stringify(newObj));
+                
+                // 更新内存变量
+                myKey = newObj.key;
+                sendIds = {};
+                recvIds = {};
+                
+                // 更新界面显示
+                const myKeyElement = document.getElementById('myKeyId');
+                if (myKeyElement) {
+                    myKeyElement.textContent = myKey;
+                }
+            }
+
+            // ===== 轮询接收消息 =====
+            function startPolling() {
+                setInterval(async () => {
+                    await receiveMessages();
+                }, POLL_INTERVAL);
+            }
+
+            // ===== 事件监听初始化 =====
+            function initEventListeners() {
+                const sendBtn = document.getElementById('sendMessageBtn');
+                const messageInput = document.getElementById('messageInput');
+                
+                const targetInput = document.getElementById('targetKeyInput');
+                if (targetInput) {
+                    targetInput.addEventListener('input', function(e) {
+                        const value = e.target.value.trim();
+                        if (value) {
+                            localStorage.setItem(STORAGE_TARGET_KEY, value);
+                            targetKey = value;
+                        } else {
+                            localStorage.removeItem(STORAGE_TARGET_KEY);
+                            targetKey = null;
+                        }
+                    });
+                }
+                
+                if (sendBtn) {
+                    sendBtn.addEventListener('click', async function(e) {
+                        e.preventDefault();
+
+                        if (!myKey) {
+                            showAlertToast('我的密钥不能为空');
+                            return;
+                        }
+
+                        if(!targetKey) {
+                            showAlertToast('对方密钥不能为空');
+                            return;
+                        }
+
+                        if(myKey.length != 24) {
+                            showAlertToast('我的密钥的长度应该为24字节');
+                            return;
+                        }
+
+                        if(targetKey.length != 24) {
+                            showAlertToast('对方密钥的长度应该为24字节');
+                            return;
+                        }
+
+                        if(myKey == targetKey) {
+                            showAlertToast('对方密钥不能和我的密钥一样');
+                            return;
+                        }
+                        
+                        const text = messageInput.value;
+                        if (!text || text.trim() === '') {
+                            showAlertToast('发送的消息不能为空');
+                            return;
+                        }
+                        
+                        if (new TextEncoder().encode(text).length > 1000) {
+                            showAlertToast('你所发送的内容太长，已经超过1000字节了');
+                            return;
+                        }
+                        
+                        await sendMessage(text);
+                    });
+                }
+                
+                if (messageInput) {
+                    messageInput.addEventListener('keydown', function(e) {
+                        // if (e.key === 'Enter' && !e.shiftKey) {
+                        //     e.preventDefault();
+                        //     sendBtn?.click();
+                        // }
+                    });
+
+                    function autoResize() {
+                        this.style.height = 'auto';
+                        const newHeight = Math.min(this.scrollHeight, 120);
+                        this.style.height = newHeight + 'px';
+                        if (this.scrollHeight < 28) this.style.height = '28px';
+                    }
+                    messageInput.addEventListener('input', autoResize);
+                    setTimeout(() => autoResize.call(messageInput), 0);
+                }
+                
+                const toggleBtn = document.getElementById('toggleKeyBtn');
+                const keySection = document.getElementById('keySection');
+                let isCollapsed = false;
+                
+                if (toggleBtn && keySection) {
+                    toggleBtn.addEventListener('click', function() {
+                        isCollapsed = !isCollapsed;
+                        keySection.classList.toggle('collapsed', isCollapsed);
+                        
+                        toggleBtn.innerHTML = isCollapsed ? `
+                            <svg viewBox="0 0 30 30" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 23L7 15L9 13L15 19L21 13L23 15L15 23Z" fill="#6aa384" stroke="none" />
+                                <path d="M15 15L7 7L9 5L15 11L21 5L23 7L15 15Z" fill="#6aa384" stroke="none" />
+                            </svg>
+                        ` : `
+                            <svg viewBox="0 0 30 30" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 7L7 15L9 17L15 11L21 17L23 15L15 7Z" fill="#6aa384" stroke="none" />
+                                <path d="M15 15L7 23L9 25L15 19L21 25L23 23L15 15Z" fill="#6aa384" stroke="none" />
+                            </svg>
+                        `;
+                    });
+                }
+                
+                const clearBtn = document.getElementById('clearChatBtn');
+                const modalOverlay = document.getElementById('confirmModal');
+                const modalCancel = document.getElementById('modalCancel');
+                const modalConfirm = document.getElementById('modalConfirm');
+                
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => modalOverlay?.classList.add('show'));
+                }
+                
+                if (modalCancel) {
+                    modalCancel.addEventListener('click', () => modalOverlay?.classList.remove('show'));
+                }
+                
+                if (modalConfirm) {
+                    modalConfirm.addEventListener('click', function() {
+                        // 清空聊天记录
+                        messageList = [];
+                        saveMessages();
+                        renderMessages();
+                        
+                        // 清空对方密钥框
+                        const targetInput = document.getElementById('targetKeyInput');
+                        if (targetInput) {
+                            targetInput.value = '';
+                            localStorage.removeItem(STORAGE_TARGET_KEY);
+                            targetKey = null;
+                        }
+                        
+                        // 重新生成我的密钥
+                        regenerateMyKey();
+                        
+                        // 添加一条提示消息
+                        addMessage('🧹 聊天记录已清空，密钥已重新生成', 0, '', '', false);
+                        
+                        modalOverlay?.classList.remove('show');
+                    });
+                }
+                
+                if (modalOverlay) {
+                    modalOverlay.addEventListener('click', function(e) {
+                        if (e.target === modalOverlay) {
+                            modalOverlay.classList.remove('show');
+                        }
+                    });
+                }
+
+                const marqueeContainer = document.getElementById('marqueeContainer');
+                if (marqueeContainer) {
+                    marqueeContainer.addEventListener('mouseenter', () => {
+                        isPaused = true;
+                    });
+                    marqueeContainer.addEventListener('mouseleave', () => {
+                        isPaused = false;
+                    });
+                }
+            }
+
+            // ===== 初始化 =====
+            async function init() {    
+                initMyKey();
+                initTargetKey();
+                initNotice();
+                
+                loadMessages();
+                renderMessages();
+                
+                initEventListeners();
+                
+                startPolling();
+                
+                const messageArea = document.getElementById('messageArea');
+                if (messageArea) messageArea.scrollTop = messageArea.scrollHeight;
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>
