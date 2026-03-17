@@ -1551,6 +1551,32 @@
                 }, POLL_INTERVAL);
             }
 
+            function syncStorage(e) {
+                //console.log("syncStorage..................");
+                //console.log(e.key, e.oldValue, e.newValue, e.url);
+
+                if(e.key == STORAGE_TARGET_KEY) {
+                    if(e.newValue == null) {
+                        const targetInput = document.getElementById('targetKeyInput');
+                        if (targetInput) {
+                            targetInput.value = '';
+                            targetKey = null;
+                        }
+                    } else {
+                        targetKey = null;
+                        initTargetKey();
+                    }
+                    
+                } else if(e.key == STORAGE_MY_KEY) {
+                    initMyKey();
+                } else if(e.key == STORAGE_MESSAGES) {
+                    loadMessages();
+                    renderMessages();
+                } else if(e.key == STORAGE_NOTICEID) {
+                    initNotice();
+                }
+            }
+            
             // ===== 事件监听初始化 =====
             function initEventListeners() {
                 const sendBtn = document.getElementById('sendMessageBtn');
@@ -1710,6 +1736,8 @@
                         isPaused = false;
                     });
                 }
+
+                window.addEventListener('storage', syncStorage);
             }
 
             // ===== 初始化 =====
