@@ -4,14 +4,14 @@ ziyoupark is a truly private 1-to-1 encrypted chat tool. No phone number, no ema
 自由公园是一个真正私密的 1对1 加密聊天工具。无需手机号，无需邮箱，无需注册，打开网页即可使用。所有消息均经过 AES-GCM 端到端加密，除了聊天双方，任何人都无法获取聊天内容。致力于打造一个不被任何人监控的纯净聊天空间。官方网站：https://www.ziyoupark.com
 
 ## In today's digital world, privacy has become a luxury. ziyoupark is driven by a series of simple yet powerful principles:
-- **True End-to-End Encryption:** Using AES-GCM 256-bit encryption, messages are encrypted before sending and can only be decrypted by the recipient holding the correct key
+- **True End-to-End Encryption:** Using AES-GCM 128-bit encryption, messages are encrypted before sending and can only be decrypted by the recipient holding the correct key
 - **Complete Anonymity:** No personal information is collected — no phone, email, or any authentication required
 - **No Server Retention:** We only act as a temporary relay for encrypted messages; the server cannot read any content
 - **Keys Under Your Control:** Your keys exist only in your browser locally and are never transmitted
 - **Clear to Disappear:** Click "Clear Traces" and all chat history and keys are immediately deleted locally
 
 ## 在当今的数字世界，隐私已成为奢侈品。自由公园由一系列简单而强大的理念驱动：
-- **真正的端到端加密:** 采用 AES-GCM 256位加密，消息在发送前加密，只有持有正确密钥的接收者才能解密
+- **真正的端到端加密:** 采用 AES-GCM 128位加密，消息在发送前加密，只有持有正确密钥的接收者才能解密
 - **完全匿名:** 不收集任何个人信息，无需手机、邮箱或任何身份验证
 - **无服务器留存:** 我们仅作为加密消息的临时中转，服务器无法读取任何内容
 - **密钥由你掌控:** 你的密钥只存在于你的浏览器本地，永不传输
