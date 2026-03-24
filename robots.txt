@@ -1,0 +1,237 @@
+# robots.txt for ziyoupark.com
+# 最后更新: 2026-03-24
+# 单域名多语言网站 - 服务器根据User-Agent/Accept-Language动态返回内容
+
+# ============================================
+# 全局规则
+# ============================================
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /backup/
+Disallow: /*.dat$
+Crawl-delay: 1
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+# Bing/Microsoft
+User-agent: bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: bingpreview
+Allow: /
+
+User-agent: MSNBot
+Allow: /
+
+User-agent: MSNBot-Media
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yahoo! Slurp
+Allow: /
+
+# Yandex (俄罗斯)
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: YandexVideo
+Allow: /
+
+User-agent: YandexMobileBot
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot-Mobile
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Applebot-News
+Allow: /
+
+# 社交媒体爬虫
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+# 其他国际搜索引擎
+User-agent: Amazonbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Exabot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+User-agent: SeznamBot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+# ============================================
+# 中文主流搜索引擎（返回中文内容）
+# ============================================
+
+# 百度
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Baiduspider-video
+Allow: /
+
+User-agent: Baiduspider-news
+Allow: /
+
+User-agent: Baiduspider-mobile
+Allow: /
+
+# 360搜索
+User-agent: 360Spider
+Allow: /
+Crawl-delay: 1
+
+User-agent: 360Spider-Image
+Allow: /
+
+User-agent: 360Spider-Video
+Allow: /
+
+User-agent: 360Spider-Mobile
+Allow: /
+
+# 搜狗
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 1
+
+User-agent: Sogou News Spider
+Allow: /
+
+User-agent: Sogou Image Spider
+Allow: /
+
+User-agent: Sogou Video Spider
+Allow: /
+
+User-agent: Sogou-mobile
+Allow: /
+
+# 神马搜索
+User-agent: YisouSpider
+Allow: /
+Crawl-delay: 1
+
+User-agent: YisouSpider-Image
+Allow: /
+
+# 头条搜索
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bytespider-Mobile
+Allow: /
+
+# 搜搜（兼容）
+User-agent: Sosospider
+Allow: /
+
+# ============================================
+# SEO工具和验证爬虫
+# ============================================
+
+# Google 工具
+User-agent: Google-Site-Verification
+Allow: /
+
+User-agent: Google-PageSpeed
+Allow: /
+
+User-agent: Google-AMPHTML
+Allow: /
+
+# Bing 工具
+User-agent: bingpreview
+Allow: /
+
+# 百度工具
+User-agent: Baidu-YunGuanCe
+Allow: /
+
+# SEO分析工具（限制频率）
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 5
+
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 5
+
+User-agent: rogerbot
+Allow: /
+Crawl-delay: 5
+
+User-agent: MJ12bot
+Allow: /
+Crawl-delay: 5
+
+User-agent: DotBot
+Allow: /
+Crawl-delay: 5
+
+# ============================================
+# 站点地图
+# ============================================
+Sitemap: https://www.ziyoupark.com/sitemap.xml

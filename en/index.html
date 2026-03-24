@@ -1,37 +1,35 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>自由公园 - 端到端加密聊天 | 私密1对1聊天 | 免注册安全通讯</title>
-    <meta name="description" content="自由公园提供端到端加密的私密聊天服务，无需手机号、邮箱或注册，真正的匿名聊天。AES-128 GCM加密保护您的隐私，任何人都无法监控您的对话。安全、自由、私密的聊天平台。">
-    <meta name="keywords" content="加密聊天,私密聊天,端到端加密,安全聊天,匿名聊天,免注册聊天,私密通讯,安全通讯,AES加密,隐私保护,1对1聊天">
-    <meta name="author" content="自由公园">
-    <meta name="copyright" content="自由公园">
+    <title>Ziyou Park - End-to-End Encrypted Chat | Private 1-on-1 Messaging | No Registration Required</title>
+    <meta name="description" content="Ziyou Park offers end-to-end encrypted private chat service. No phone number, email, or registration required. AES-128 GCM encryption protects your privacy. Anonymous, secure, and truly private communication platform.">
+    <meta name="keywords" content="encrypted chat, private messaging, end-to-end encryption, secure chat, anonymous chat, no registration chat, private communication, secure messaging, AES encryption, privacy protection, one-on-one chat">
+    <meta name="author" content="Ziyou Park">
+    <meta name="copyright" content="Ziyou Park">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="baiduspider" content="index, follow">
-    <meta name="language" content="Chinese">
-
-    <!-- 规范URL和多语言声明（修正版）-->
+    <meta name="language" content="English">
     <link rel="canonical" href="https://www.ziyoupark.com/">
     <link rel="alternate" hreflang="zh-CN" href="https://www.ziyoupark.com/">
     <link rel="alternate" hreflang="zh" href="https://www.ziyoupark.com/">
     <link rel="alternate" hreflang="en" href="https://www.ziyoupark.com/">
     <link rel="alternate" hreflang="x-default" href="https://www.ziyoupark.com/">
-
-    <meta property="og:title" content="自由公园 - 端到端加密聊天">
-    <meta property="og:description" content="无需注册，端到端加密，真正的私密聊天平台">
+    
+    <meta property="og:title" content="Ziyou Park - End-to-End Encrypted Chat">
+    <meta property="og:description" content="No registration, end-to-end encryption, truly private chat platform">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.ziyoupark.com/">
-    <meta property="og:locale" content="zh_CN">
-    <meta property="og:locale:alternate" content="en_US">
-    
-    <!-- Twitter卡片 -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="自由公园 - 端到端加密聊天">
-    <meta name="twitter:description" content="无需注册，端到端加密，真正的私密聊天平台">
+    <meta name="twitter:title" content="Ziyou Park - End-to-End Encrypted Chat">
+    <meta name="twitter:description" content="No registration, end-to-end encryption, truly private chat platform">
     
+    <!-- 移动端优化 -->
     <meta name="format-detection" content="telephone=no">
     <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
 
@@ -899,12 +897,12 @@
         <div class="top-fresh">
             <div class="domain-box">
                 <span class="domain">ziyoupark.com</span>
-                <span class="fresh-tag">自 由 公 园</span>
+                <span class="fresh-tag">F R E E D O M &nbsp; P A R K</span>
             </div>
             <div class="no-sign-badge-vertical">
-                <span>📱 无需手机</span>
-                <span>✉️ 无需邮箱</span>
-                <span>🔑 无需注册</span>
+                <span>📱 No Phone</span>
+                <span>✉️ No Email</span>
+                <span>🔑 No Registration</span>
             </div>
         </div>
 
@@ -915,7 +913,7 @@
         </div>
 
         <div class="key-section-wrapper">
-            <div class="toggle-key-btn" id="toggleKeyBtn" title="折叠/展开密钥区域">
+            <div class="toggle-key-btn" id="toggleKeyBtn" title="Collapse/Expand Key Section">
                 <svg viewBox="0 0 30 30" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 7L7 15L9 17L15 11L21 17L23 15L15 7Z" fill="#6aa384" stroke="none" />
                     <path d="M15 15L7 23L9 25L15 19L21 25L23 23L15 15Z" fill="#6aa384" stroke="none" />
@@ -924,23 +922,23 @@
             
             <div class="key-section" id="keySection">
                 <div class="my-key-row">
-                    <span class="my-key-label">我的密钥</span>
+                    <span class="my-key-label">My Key</span>
                     <div class="key-text-container">
                         <span class="my-key-block" id="myKeyId"></span>
                     </div>
                 </div>
                 
                 <div class="target-row">
-                    <span class="target-label">对方密钥</span>
-                    <input class="target-input" type="text" id="targetKeyInput" placeholder="粘贴对方的密钥到这里" value="">
+                    <span class="target-label">Partner Key</span>
+                    <input class="target-input" type="text" id="targetKeyInput" placeholder="Paste your partner's key here" value="">
                 </div>
             </div>
         </div>
 
         <div class="chat-main">
             <div class="message-container">
-                <div class="clear-float-btn" id="clearChatBtn" title="清空所有聊天记录">
-                    <span>🧹</span> 清空痕迹
+                <div class="clear-float-btn" id="clearChatBtn" title="Clear all chat history">
+                    <span>🧹</span> Clear Traces
                 </div>
                 
                 <div class="message-area" id="messageArea"></div>
@@ -948,10 +946,10 @@
 
             <div class="chat-input-footer" id="chatInputFooter">
                 <div class="input-field-wrapper">
-                    <textarea class="message-textarea" id="messageInput" placeholder="输入消息... AES加密" rows="1"></textarea>
+                    <textarea class="message-textarea" id="messageInput" placeholder="Type message... AES Encrypted" rows="1"></textarea>
                 </div>
-                <button class="send-button" id="sendMessageBtn" aria-label="发送消息">
-                    <span>📨</span> 发送
+                <button class="send-button" id="sendMessageBtn" aria-label="Send message">
+                    <span>📨</span> Send
                 </button>
             </div>
         </div>
@@ -960,29 +958,29 @@
     <div class="modal-overlay" id="sendingModal">
         <div class="sending-modal">
             <div class="sending-spinner">⏳</div>
-            <div class="sending-text">正在发送中，请稍候......</div>
+            <div class="sending-text">Sending, please wait......</div>
         </div>
     </div>
 
-    <div class="custom-toast-alert" id="messageToast">发送消息不能为空</div>
+    <div class="custom-toast-alert" id="messageToast">Message cannot be empty</div>
 
     <div class="modal-overlay" id="confirmModal">
         <div class="modal-container">
             <div class="modal-icon">⚠️</div>
-            <div class="modal-title">清空聊天记录？</div>
+            <div class="modal-title">Clear Chat History?</div>
             <div class="modal-message">
-                确定清除所有的历史聊天内容，<br>并重新生成新的密钥吗？
+                Are you sure you want to clear all chat history and generate a new key?
             </div>
             <div class="modal-actions">
-                <button class="modal-btn cancel" id="modalCancel">取消</button>
-                <button class="modal-btn confirm" id="modalConfirm">清空</button>
+                <button class="modal-btn cancel" id="modalCancel">Cancel</button>
+                <button class="modal-btn confirm" id="modalConfirm">Clear</button>
             </div>
         </div>
     </div>
 
     <script>
         (function() {
-            // ===== 常量定义 =====
+            // ===== Constants =====
             const STORAGE_MY_KEY = 'chat_my_key';
             const STORAGE_TARGET_KEY = 'chat_target_key';
             const STORAGE_NOTICEID = 'noticeid';
@@ -1004,7 +1002,7 @@
             let contentWidth = 0;
             let isPaused = false;
             
-            // ===== 工具函数 =====
+            // ===== Utility Functions =====
             function showAlertToast(message) {
                 const toast = document.getElementById('messageToast');
                 if (!toast) return;
@@ -1072,7 +1070,7 @@
                 return key.substring(0, 7);
             }
 
-            // ===== 解密函数 =====
+            // ===== Decryption Function =====
             async function decryptMessageFromBase64(encryptedBase64, base64Key) {
                 try {
                     const encryptedData = base64ToUint8Array(encryptedBase64);
@@ -1102,13 +1100,13 @@
                     const decoder = new TextDecoder();
                     return decoder.decode(decryptedData);
                 } catch (error) {
-                    console.error('解密失败:', error);
-                    return '[解密失败]';
+                    console.error('Decryption failed:', error);
+                    return '[Decryption Failed]';
                 }
             }
 
-            // ===== 滚动广告相关代码 =====
-            function setMarqueeText(text, tag = '通知', tagColor = '#46b882') {
+            // ===== Marquee Ad Code =====
+            function setMarqueeText(text, tag = 'Notice', tagColor = '#46b882') {
                 const container = document.getElementById('marqueeContent');
                 if (!container) return;
                 
@@ -1158,7 +1156,7 @@
                 animationFrame = requestAnimationFrame(scroll);
             }
 
-            // ===== 消息存储管理 =====
+            // ===== Message Storage Management =====
             function loadMessages() {
                 const saved = localStorage.getItem(STORAGE_MESSAGES);
                 if (saved) {
@@ -1172,7 +1170,7 @@
                     const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
                     messageList = [
                         {
-                            text: '1对1私密聊天，和你的朋友交换密钥后，除了聊天双方外，任何人都无法获取聊天的内容。如果你对网站有任何的建议，也可以向网站管理员发送消息，方法是，在对方密钥的输入框中，填写特殊的密钥串 123456781234567812345678 记住一共是24个字符，这样就会发送到管理员，也能接收管理员的回复，你和管理员之间，是以明文的形式，因为管理员没有你的密钥。我们也建了一个qq群，为对隐私安全感兴趣的朋友，提供一个相互交流的地方，群号是 933529835',
+                            text: 'Private 1-on-1 chat. After exchanging keys with your friend, no one except the two parties can access the conversation. If you have any suggestions for the website, you can send a message to the site administrator by entering the special key string 123456781234567812345678 (24 characters) in the partner key field. This will send a message to the administrator, and you can also receive replies from the administrator. Communication between you and the administrator is in plain text because the administrator does not have your key.',
                             who: 0,
                             timestamp: timeStr,
                             keyPrefix: '',
@@ -1200,12 +1198,18 @@
                     const messageDiv = document.createElement('div');
                     messageDiv.className = msg.who == 3 ? 'message own' : 'message other';
                     
+                    let whoText = '';
+                    if (msg.who == 0) whoText = 'System';
+                    else if (msg.who == 1) whoText = 'Admin';
+                    else if (msg.who == 2) whoText = 'Partner';
+                    else whoText = 'Me';
+                    
                     messageDiv.innerHTML = `
                         <div class="bubble">
                             <div class="bubble-content">${msg.text}</div>
                             <div class="meta">
                                 <span>${msg.keyPrefix || ''}</span>
-                                <span>${msg.who == 0 ? '系统' : msg.who == 1 ? '网站管理员' : msg.who == 2 ? '对方' : '我'} ${msg.timestamp}</span>
+                                <span>${whoText} ${msg.timestamp}</span>
                                 ${msg.isencrypt ? '<span class="encrypt-tiny">🔒 AES</span>' : ''}
                             </div>
                         </div>
@@ -1262,7 +1266,7 @@
             function initNotice() {
                 let id = localStorage.getItem(STORAGE_NOTICEID);
                 if(!id) {
-                    setMarqueeText('✨大家好，本网站叫自由公园，是1对1私密聊天，端到端加密，不被任何人监控，放心聊天的地方！如果你对隐私安全感兴趣，或者对本网站有一些建议或意见，也欢迎加入我们的QQ群：933529835');
+                    setMarqueeText('✨ Welcome to Ziyou Park, a 1-on-1 private chat platform with end-to-end encryption. No monitoring, safe chatting! If you are interested in privacy and security, or have suggestions, feel free to join our community.');
                     return;
                 }
 
@@ -1345,7 +1349,7 @@
                 return newRecvId;
             }
 
-            // ===== AES加密 =====
+            // ===== AES Encryption =====
             async function encryptMessageToBase64(plainText, base64Key) {
                 try {
                     const keyData = base64ToUint8Array(base64Key);
@@ -1378,12 +1382,12 @@
                     
                     return uint8ArrayToBase64(result);
                 } catch (error) {
-                    console.error('加密失败:', error);
+                    console.error('Encryption failed:', error);
                     throw error;
                 }
             }
 
-            // ===== 发送消息 =====
+            // ===== Send Message =====
             async function sendMessage(text) {
                 try {
                     const hash1 = await sha1Base64(myKey);
@@ -1391,23 +1395,23 @@
                     
                     const sendId = getOrCreateSendId(targetKey);
                     if (!sendId) {
-                        showAlertToast('无法生成发送ID');
+                        showAlertToast('Unable to generate send ID');
                         return;
                     }
 
-                    // 判断是否是发给管理员的建议消息（特殊密钥）
+                    // Check if sending to admin (special key)
                     let encryptedMsgBase64;
                     let isencrypt = true;
                     if (targetKey === '123456781234567812345678') {
-                        // 发给管理员的建议消息，不加密，只是base64
+                        // Message to admin, not encrypted, just base64
                         encryptedMsgBase64 = strToBase64(text);
                         isencrypt = false;
                     } else {
                         if(!targetKey.endsWith("==")) {
-                            showAlertToast('对方密钥的格式不正确，应该以 == 结尾');
+                            showAlertToast('Partner key format is incorrect. Should end with ==');
                             return;
                         }
-                        // 普通消息，加密
+                        // Normal message, encrypted
                         encryptedMsgBase64 = await encryptMessageToBase64(text, targetKey);
                     }
                     
@@ -1430,7 +1434,7 @@
 
                     if(!response.ok) {
                         if (sendingModal) sendingModal.classList.remove('show');
-                        showAlertToast("发送失败，你的版本太旧，请在浏览器菜单，点击刷新网页");
+                        showAlertToast("Send failed. Your version is outdated, please refresh the page");
                         return;
                     }
 
@@ -1439,9 +1443,9 @@
 
                     if(responseData.ret != 1) {
                         if(responseData.ret == 2) {
-                            showAlertToast("发送失败，版本号不匹配，请在浏览器菜单，点击刷新网页");
+                            showAlertToast("Send failed. Version mismatch, please refresh the page");
                         } else {
-                            showAlertToast('发送失败，服务器拒绝');
+                            showAlertToast('Send failed. Server rejected');
                         }
                         return;
                     }
@@ -1457,14 +1461,14 @@
                     textarea.style.height = 'auto';
                     textarea.style.height = '28px';
                 } catch (error) {
-                    console.error('发送失败:', error);
+                    console.error('Send failed:', error);
                     const sendingModal = document.getElementById('sendingModal');
                     if (sendingModal) sendingModal.classList.remove('show');
-                    showAlertToast("网络失败，请在浏览器菜单中，点击刷新网页，或者检查网络");
+                    showAlertToast("Network error. Please refresh the page or check your network");
                 }
             }
 
-            // ===== 接收消息 =====
+            // ===== Receive Messages =====
             async function receiveMessages() {
                 if (!myKey || !targetKey) {
                     return;
@@ -1479,22 +1483,19 @@
                 }
                 
                 if(myKey == targetKey) {
-                    showAlertToast('对方密钥不能和我的密钥一样');
+                    showAlertToast('Partner key cannot be the same as my key');
                     return;
                 }
                 
                 try {
-                    // 计算hash1（对方密钥的SHA1）和hash2（自己密钥的SHA1）
-                    const hash1 = await sha1Base64(targetKey);  // 对方是发送方
-                    const hash2 = await sha1Base64(myKey);      // 自己是接收方
+                    const hash1 = await sha1Base64(targetKey);
+                    const hash2 = await sha1Base64(myKey);
                     
-                    // 获取或生成recvid
                     const recvId = getOrCreateRecvId(targetKey);
                     if (!recvId) {
                         return;
                     }
                     
-                    // 准备表单数据
                     const formData = new URLSearchParams();
                     formData.append('hash1', hash1);
                     formData.append('hash2', hash2);
@@ -1510,7 +1511,6 @@
                         formData.append('curver', '0');
                     }
                     
-                    // 发送请求
                     const response = await fetch('/recvmsg', {
                         method: 'POST',
                         headers: {
@@ -1520,7 +1520,7 @@
                     });
 
                     if (!response.ok) {
-                        showAlertToast("你的网页版本太旧，请在浏览器菜单，点击刷新网页");
+                        showAlertToast("Your page version is outdated, please refresh the page");
                         return;
                     }
                     
@@ -1528,7 +1528,7 @@
 
                     if(responseData.ret != 1) {
                         if(responseData.ret == 2) {
-                            showAlertToast("版本号不匹配，请在浏览器菜单，点击刷新网页");
+                            showAlertToast("Version mismatch, please refresh the page");
                         }
                         return;
                     }
@@ -1540,13 +1540,12 @@
                     }
 
                     if (responseData.hash1 !== hash1) {
-                        console.log('hash1不匹配，丢弃整批消息');
+                        console.log('hash1 mismatch, discarding messages');
                         return;
                     }
 
-                    // 验证hash2是否匹配（确保消息是发给自己的）
                     if (responseData.hash2 !== hash2) {
-                        console.log('hash2不匹配，丢弃整批消息');
+                        console.log('hash2 mismatch, discarding messages');
                         return;
                     }
 
@@ -1577,7 +1576,6 @@
                                 }
                             }
 
-                            // 将时间戳转换为可读格式
                             const date = new Date(msgData.timestamp * 1000);
                             const timestamp = `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
                             const keyPrefix = getKeyPrefix(targetKey);
@@ -1588,14 +1586,12 @@
                         saveCurverids();
                     }
                 } catch (error) {
-                    // showAlertToast("网络失败，请在浏览器菜单中，点击刷新网页，或者检查网络");
-                    console.error('接收消息失败:', error);
+                    console.error('Receive messages failed:', error);
                 }
             }
 
-            // ===== 重新生成我的密钥 =====
+            // ===== Regenerate My Key =====
             function regenerateMyKey() {
-                // 生成新密钥
                 const newKey = generate128BitKey();
                 const newObj = {
                     key: newKey,
@@ -1603,22 +1599,19 @@
                     recvids: {}
                 };
                 
-                // 更新localStorage
                 localStorage.setItem(STORAGE_MY_KEY, JSON.stringify(newObj));
                 
-                // 更新内存变量
                 myKey = newObj.key;
                 sendIds = {};
                 recvIds = {};
                 
-                // 更新界面显示
                 const myKeyElement = document.getElementById('myKeyId');
                 if (myKeyElement) {
                     myKeyElement.textContent = myKey;
                 }
             }
 
-            // ===== 轮询接收消息 =====
+            // ===== Polling to Receive Messages =====
             function startPolling() {
                 setInterval(async () => {
                     await receiveMessages();
@@ -1626,9 +1619,6 @@
             }
 
             function syncStorage(e) {
-                //console.log("syncStorage..................");
-                //console.log(e.key, e.oldValue, e.newValue, e.url);
-
                 if(e.key == STORAGE_TARGET_KEY) {
                     if(e.newValue == null) {
                         const targetInput = document.getElementById('targetKeyInput');
@@ -1653,7 +1643,7 @@
                 }
             }
             
-            // ===== 事件监听初始化 =====
+            // ===== Event Listener Initialization =====
             function initEventListeners() {
                 const sendBtn = document.getElementById('sendMessageBtn');
                 const messageInput = document.getElementById('messageInput');
@@ -1677,38 +1667,38 @@
                         e.preventDefault();
 
                         if (!myKey) {
-                            showAlertToast('我的密钥不能为空');
+                            showAlertToast('My key cannot be empty');
                             return;
                         }
 
                         if(!targetKey) {
-                            showAlertToast('对方密钥不能为空');
+                            showAlertToast('Partner key cannot be empty');
                             return;
                         }
 
                         if(myKey.length != 24) {
-                            showAlertToast('我的密钥的长度应该为24字节');
+                            showAlertToast('My key length should be 24 characters');
                             return;
                         }
 
                         if(targetKey.length != 24) {
-                            showAlertToast('对方密钥的长度应该为24字节');
+                            showAlertToast('Partner key length should be 24 characters');
                             return;
                         }
 
                         if(myKey == targetKey) {
-                            showAlertToast('对方密钥不能和我的密钥一样');
+                            showAlertToast('Partner key cannot be the same as my key');
                             return;
                         }
                         
                         const text = messageInput.value;
                         if (!text || text.trim() === '') {
-                            showAlertToast('发送的消息不能为空');
+                            showAlertToast('Message cannot be empty');
                             return;
                         }
                         
                         if (new TextEncoder().encode(text).length > 1000) {
-                            showAlertToast('你所发送的内容太长，已经超过1000字节了');
+                            showAlertToast('Message is too long, exceeds 1000 bytes');
                             return;
                         }
                         
@@ -1718,10 +1708,7 @@
                 
                 if (messageInput) {
                     messageInput.addEventListener('keydown', function(e) {
-                        // if (e.key === 'Enter' && !e.shiftKey) {
-                        //     e.preventDefault();
-                        //     sendBtn?.click();
-                        // }
+                        // Enter key handling commented out
                     });
 
                     function autoResize() {
@@ -1772,12 +1759,10 @@
                 
                 if (modalConfirm) {
                     modalConfirm.addEventListener('click', function() {
-                        // 清空聊天记录
                         messageList = [];
                         saveMessages();
                         renderMessages();
                         
-                        // 清空对方密钥框
                         const targetInput = document.getElementById('targetKeyInput');
                         if (targetInput) {
                             targetInput.value = '';
@@ -1785,13 +1770,11 @@
                             targetKey = null;
                         }
                         
-                        // 重新生成我的密钥
                         regenerateMyKey();
                         curverIds = {};
                         saveCurverids();
                         
-                        // 添加一条提示消息
-                        addMessage('🧹 聊天记录已清空，密钥已重新生成', 0, '', '', false);
+                        addMessage('🧹 Chat history cleared, key regenerated', 0, '', '', false);
                         
                         modalOverlay?.classList.remove('show');
                     });
@@ -1818,7 +1801,7 @@
                 window.addEventListener('storage', syncStorage);
             }
 
-            // ===== 初始化 =====
+            // ===== Initialization =====
             async function init() {    
                 initMyKey();
                 initTargetKey();
