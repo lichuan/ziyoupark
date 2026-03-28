@@ -1818,7 +1818,23 @@
                 window.addEventListener('storage', syncStorage);
             }
 
-            // ===== 初始化 =====
+            function handleViewportResize() {
+                const chatApp = document.querySelector('.chat-app');
+                const body = document.body;
+                
+                if (window.visualViewport) {
+                    // 使用 visualViewport API 获取实际可见高度
+                    const height = window.visualViewport.height;
+                    chatApp.style.height = height + 'px';
+                    body.style.height = height + 'px';
+                }
+            }
+
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', handleViewportResize);
+                window.visualViewport.addEventListener('scroll', handleViewportResize);
+            }
+            
             async function init() {    
                 initMyKey();
                 initTargetKey();
@@ -1834,6 +1850,7 @@
                 
                 const messageArea = document.getElementById('messageArea');
                 if (messageArea) messageArea.scrollTop = messageArea.scrollHeight;
+                handleViewportResize();
             }
 
             if (document.readyState === 'loading') {
